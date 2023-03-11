@@ -3,6 +3,7 @@ package org.example.Controller;
 import org.example.dto.Student;
 import org.example.service.AddBookService;
 import org.example.service.AdminService;
+import org.example.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -12,9 +13,11 @@ import java.util.Scanner;
 
 public class AdminController {
     @Autowired
-private AdminService adminService = new AdminService();
+    private AdminService adminService ;
     @Autowired
-    private AddBookService addBookService = new AddBookService();
+    private AddBookService addBookService;
+    @Autowired
+    private StudentController studentController;
 
     public void start() {
         boolean b = true;
@@ -50,6 +53,8 @@ private AdminService adminService = new AdminService();
     }
 
     private void AddStudent() {
+        System.out.println("Student qo'shing");
+    // StudentController.addStudent();
 
     }
 
@@ -58,6 +63,10 @@ private AdminService adminService = new AdminService();
     }
 
     private void DeleteBook() {
+        System.out.println("enter ID ");
+        Scanner scanner = new Scanner(System.in);
+        int id = scanner.nextInt();
+        addBookService.deleteBook(id);
 
     }
 
@@ -77,10 +86,8 @@ private AdminService adminService = new AdminService();
     }
 
     private void BookList() {
-        System.out.println("enter title");
-        Scanner scanner = new Scanner(System.in);
-        String title = scanner.next();
-        addBookService.bookList(title);
+
+        addBookService.bookList();
 
 
     }

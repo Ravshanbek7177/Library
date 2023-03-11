@@ -11,7 +11,7 @@ import java.util.Scanner;
 @Controller
 public class AuthController {
     @Autowired
-   private Authservice authservice = new Authservice();
+   private Authservice authservice ;
 
     public  void  start(){
         Database.init();
