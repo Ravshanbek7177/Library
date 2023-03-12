@@ -9,31 +9,33 @@ import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Scanner;
+
 @Controller
 
 public class AdminController {
     @Autowired
-    private AdminService adminService ;
+    private AdminService adminService;
     @Autowired
     private AddBookService addBookService;
     @Autowired
-    private StudentController studentController;
+    private StudentService studentService;
+    Scanner scanner = new Scanner(System.in);
 
     public void start() {
         boolean b = true;
 
-        while (b){
+        while (b) {
             menyu();
             Scanner scanner = new Scanner(System.in);
             int n = scanner.nextInt();
-            switch (n){
-                case 1 ->BookList();
+            switch (n) {
+                case 1 -> BookList();
                 case 2 -> AddBook();
-                case  3 -> DeleteBook();
-                case 4 -> BookStudent();
-                case  5 -> AddStudent();
+                case 3 -> DeleteBook();
+                case 4 -> StudentLIST();
+                case 5 -> AddStudent();
                 case 6 -> DeleteStudent();
-                case  7 -> StudentTask();
+                case 7 -> StudentTask();
                 case 8 -> BookTask();
             }
 
@@ -49,38 +51,44 @@ public class AdminController {
     }
 
     private void DeleteStudent() {
-
+        System.out.println("enter ID");
+        int n = scanner.nextInt();
+        studentService.deleteStudent(n);
     }
 
     private void AddStudent() {
-        System.out.println("Student qo'shing");
-    // StudentController.addStudent();
+
+        System.out.println("enter name ");
+        String name = scanner.next();
+        System.out.println("enter surname ");
+        String surname = scanner.next();
+        System.out.println(" enter phone");
+        String phone = scanner.next();
+
+        studentService.addStudent(name, surname, phone);
 
     }
 
-    private void BookStudent() {
-
+    private void StudentLIST() {
+        StudentController.studentList();
     }
 
     private void DeleteBook() {
         System.out.println("enter ID ");
-        Scanner scanner = new Scanner(System.in);
         int id = scanner.nextInt();
         addBookService.deleteBook(id);
 
     }
 
     private void AddBook() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("enter title");
-        String title  = scanner.next();
+        String title = scanner.next();
         System.out.println("enter author ");
         String author = scanner.next();
         System.out.println(" enter amount");
         String amount = scanner.next();
 
-        addBookService.addBook(title,author,amount);
-
+        addBookService.addBook(title, author, amount);
 
 
     }
@@ -92,15 +100,15 @@ public class AdminController {
 
     }
 
-    private void menyu(){
-            System.out.println("1.BookList \n" +
-                    "2.AddBook \n" +
-                    "3.DeleteBook \n" +
-                    "4.StudentBook \n" +
-                    "5.AddStudent \n" +
-                    "6.DeleteStudent\n" +
-                    "7.StudentTask \n" +
-                    "8.BookTask");
+    private void menyu() {
+        System.out.println("1.BookList \n" +
+                "2.AddBook \n" +
+                "3.DeleteBook \n" +
+                "4.StudentLIST \n" +
+                "5.AddStudent \n" +
+                "6.DeleteStudent\n" +
+                "7.StudentTask \n" +
+                "8.BookTask");
 
     }
 }

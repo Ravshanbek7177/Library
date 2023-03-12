@@ -32,7 +32,6 @@ public class AuthController {
 
     private void Exit() {
         System.out.println(" Menyu ");
-
     }
 
     public void  login(){

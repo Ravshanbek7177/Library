@@ -18,4 +18,15 @@ public class Student {
     private LocalDateTime createdDate;
     private Boolean visible;
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", createdDate=" + createdDate +
+                ", visible=" + visible +
+                '}';
+    }
 }

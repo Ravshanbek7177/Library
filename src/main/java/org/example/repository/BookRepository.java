@@ -1,15 +1,15 @@
 package org.example.repository;
 
-import org.example.db.Database;
 import org.example.dto.Book;
+import org.example.dto.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-import java.util.LinkedList;
 import java.util.List;
+
 @Repository
 public class BookRepository {
     @Autowired
@@ -17,14 +17,14 @@ public class BookRepository {
     public Book getProfileID(int id) {
         String sql = "select * from book " +
                 "where id = " + id;
-        Book dto = jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(Book.class));
+        Book dto = jdbcTemplate.queryForObject(sql,Book.class);
        return dto;
     }
 
         public Book getProfileTitle(String title) {
         String sql = "select * from book " +
                 "where title ="+ title;
-            Book dto = jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(Book.class));
+            Book dto = jdbcTemplate.queryForObject(sql,Book.class);
             return dto;
 
     }
@@ -46,27 +46,8 @@ public class BookRepository {
 
     public List<Book> getBookList() {
         String sql = "select id , title ,author , amount from book ";
-        List<Book> bookList = new LinkedList<>();
-        try {
-            Connection connection = Database.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet set = statement.executeQuery();
-            while (set.next()) {
-                Book book = new Book();
-                book.setId(set.getInt("id"));
-                book.setTitle(set.getString("title"));
-                book.setAuthor(set.getString("author"));
-                book.setAmount(set.getString("amount"));
-                bookList.add(book);
-            }
-            connection.close();
-            return bookList;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        List<Book> bookList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Book.class));
+        return bookList;
     }
 
     public int deleteBook(int id) {
