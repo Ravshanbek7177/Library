@@ -1,7 +1,6 @@
 package org.example.repository;
 
 import org.example.dto.Book;
-import org.example.dto.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,12 +13,7 @@ import java.util.List;
 public class BookRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    public Book getProfileID(int id) {
-        String sql = "select * from book " +
-                "where id = " + id;
-        Book dto = jdbcTemplate.queryForObject(sql,Book.class);
-       return dto;
-    }
+
 
         public Book getProfileTitle(String title) {
         String sql = "select * from book " +
@@ -49,10 +43,21 @@ public class BookRepository {
         List<Book> bookList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Book.class));
         return bookList;
     }
+    public List<Book> getBookList1() {
+        String sql = "select * from book ";
+        List<Book> bookList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Book.class));
+        return bookList;
+    }
 
     public int deleteBook(int id) {
             String sql = "delete from  book " +
                     "where id =" + id;
          return jdbcTemplate.update(sql);
+    }
+
+    public List<Book> UserBookList() {
+        String sql = "select id , title, author from book";
+        List<Book> bookList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Book.class));
+        return bookList;
     }
 }

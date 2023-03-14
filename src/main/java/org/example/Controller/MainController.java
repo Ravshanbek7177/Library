@@ -1,12 +1,21 @@
 package org.example.Controller;
 
 import org.example.dto.Student;
+import org.example.service.AddBookService;
+import org.example.service.StuddentBookservice;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.util.Scanner;
 @Controller
 
 public class MainController {
+
+    @Autowired
+    private AddBookService addBookService;
+    @Autowired
+            private StuddentBookservice studdentBookservice;
+    Scanner scanner = new Scanner(System.in);
 
     public void start() {
            boolean b = true;
@@ -29,6 +38,7 @@ public class MainController {
     }
 
     private void OrderBook() {
+
     }
 
     private void History() {
@@ -36,18 +46,21 @@ public class MainController {
     }
 
     private void ReturnBook() {
-
+       addBookService.bookList1();
     }
 
     private void Takebook1() {
-
+       studdentBookservice.TakeBook1();
     }
 
     private void TakeBook() {
+        System.out.println("Enter ID ");
+        int Id = scanner.nextInt();
+        studdentBookservice.TakeBook(Id);
     }
 
     private void BookList() {
-
+        addBookService.bookListUser();
     }
     public void menyu(){
         System.out.println("1.BookList \n" +

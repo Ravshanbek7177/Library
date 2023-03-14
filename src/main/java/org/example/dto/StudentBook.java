@@ -21,4 +21,11 @@ public class StudentBook {
     private String duration;
     private Status status;
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }
