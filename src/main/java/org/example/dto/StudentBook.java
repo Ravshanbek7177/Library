@@ -1,9 +1,6 @@
 package org.example.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.example.Enum.Status;
 
 import java.time.LocalDateTime;
@@ -11,21 +8,14 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
+@ToString
 public class StudentBook {
     private Integer id ;
     private  Integer Student_id;
     private Integer book_id;
     private LocalDateTime createdDate;
     private LocalDateTime returnedDate;
-    private String duration;
     private Status status;
+    private  LocalDateTime Duration;
 
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 }

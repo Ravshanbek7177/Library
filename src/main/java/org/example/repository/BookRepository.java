@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.dto.Book;
+import org.example.dto.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,11 +16,23 @@ public class BookRepository {
     private JdbcTemplate jdbcTemplate;
 
 
-        public Book getProfileTitle(String title) {
-        String sql = "select * from book " +
-                "where title ="+ title;
-            Book dto = jdbcTemplate.queryForObject(sql,Book.class);
-            return dto;
+
+    public Student getProfileTitle(String title) {
+                String sql = "SELECT * FROM book Where title = '" + title + "';";
+                List<Student> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Student.class));
+                if (list.size() > 0) {
+                    return list.get(0);
+                }
+                return null;
+
+    }
+    public Book getBookBYId(Integer id) {
+        String sql = "SELECT * FROM book Where id = " + id + ";";
+        List<Book> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
+        if (list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
 
     }
     private Book getProfileByResultSet(ResultSet set) {
@@ -55,9 +68,25 @@ public class BookRepository {
          return jdbcTemplate.update(sql);
     }
 
-    public List<Book> UserBookList() {
-        String sql = "select id , title, author from book";
-        List<Book> bookList = jdbcTemplate.query(sql,new BeanPropertyRowMapper<>(Book.class));
-        return bookList;
+    public Book getBookById(Integer id) {
+        String sql = "SELECT * FROM book where id =" + id;
+        List<Book> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
+        if (list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
+    }
+
+
+    public int getBook(Integer id, Book book) {
+        String sql = "Update book set id =%d, title ='%s', author ='%s',publishYear ='%s',amount =%s where id = %d";
+        sql = String.format(sql, book.getId(),book.getTitle(),book.getAuthor(),book.getPublishYear(), book.getAmount(), id);
+        return jdbcTemplate.update(sql) ;
+    }
+
+    public int updateBook(Integer bookId, Book book) {
+        String sql = "Update book set id =%d, title ='%s', author ='%s',publishYear ='%s',amount =%s  where id = %d";
+        sql = String.format(sql, book.getId(),book.getTitle(),book.getAuthor(),book.getPublishYear(), book.getAmount(), bookId);
+        return jdbcTemplate.update(sql);
     }
 }

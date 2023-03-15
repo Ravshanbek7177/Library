@@ -10,20 +10,21 @@ import java.util.List;
 @Repository
 public class Studentrepository {
     @Autowired
-    private static JdbcTemplate jdbcTemplate;
+    private  JdbcTemplate jdbcTemplate;
 
-    public static List<Student> studentList() {
+    public  List<Student> studentList() {
         String sql = "select * from profile";
         List<Student> studentList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Student.class));
         return studentList;
     }
 
     public Student getProfileByPhone(String phone) {
-        String sql = "select * from profile " +
-                "where phone ="+ phone;
-        Student dto = jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(Student.class));
-        return dto;
-
+            String sql = "SELECT * FROM profile Where phone = '" + phone + "';";
+            List<Student> list = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Student.class));
+            if (list.size() > 0) {
+                return list.get(0);
+            }
+            return null;
     }
 
 /*
@@ -48,22 +49,24 @@ public class Studentrepository {
     }*/
 
     public Student getProfileByPhoneAndPassword(String name , String phone) {
-        String sql = "Select  * from profile where name  and phone " + name + phone;
+        String sql = "Select  * from profile where name  and phone '" + name +"''"  + phone +"';";
         Student student = jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(Student.class));
         return student;
         }
 
-    public void addStudent(String name, String surname, String phone) {
-        String sql = "insert into profile(name,surname,phone) " +
-                "values('%s','%s','%s')";
-        sql = String.format(sql,name,surname,phone);
-        int n = jdbcTemplate.update(sql);
-        System.out.println(n);
-    }
+
 
     public int deleteStudent(int id) {
         String sql = "delete from profile " +
                 "where id = " +id;
          return  jdbcTemplate.update(sql);
+    }
+
+    public void addStudent(Student student1) {
+        String sql = "insert into profile(name,surname,phone) " +
+                "values('%s','%s','%s')";
+        sql = String.format(sql,student1.getName(),student1.getSurname(),student1.getPhone());
+        int n = jdbcTemplate.update(sql);
+        System.out.println(n);
     }
 }

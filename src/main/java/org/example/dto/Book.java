@@ -1,11 +1,5 @@
 package org.example.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-
 
 public class Book {
     private Integer id ;
@@ -55,13 +49,13 @@ public class Book {
         this.amount = amount;
     }
 
-    public boolean isVisible() {
-        return visible;
-    }
+//    public boolean isVisible() {
+//        return visible;
+//    }
 
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
+//    public void setVisible(boolean visible) {
+//        this.visible = visible;
+//    }
 
     @Override
     public String toString() {
@@ -71,7 +65,10 @@ public class Book {
                 ", author='" + author + '\'' +
                 ", publishYear='" + publishYear + '\'' +
                 ", amount='" + amount + '\'' +
-                ", visible=" + visible +
+//                ", visible=" + visible +
                 '}';
     }
+
+
+
 }

@@ -16,12 +16,14 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
     @Autowired
+    private StudentController studentController;
+    @Autowired
     private AddBookService addBookService;
     @Autowired
     private StudentService studentService;
     Scanner scanner = new Scanner(System.in);
 
-    public void start() {
+    public void start(Student student) {
         boolean b = true;
 
         while (b) {
@@ -53,24 +55,26 @@ public class AdminController {
     private void DeleteStudent() {
         System.out.println("enter ID");
         int n = scanner.nextInt();
-        studentService.deleteStudent(n);
+//        studentService.deleteStudent(n);
     }
 
     private void AddStudent() {
 
         System.out.println("enter name ");
-        String name = scanner.next();
+        String name = scanner.nextLine();
         System.out.println("enter surname ");
-        String surname = scanner.next();
+        String surname = scanner.nextLine();
         System.out.println(" enter phone");
-        String phone = scanner.next();
+        String phone = scanner.nextLine();
 
-        studentService.addStudent(name, surname, phone);
+
+
+//        studentService.addStudent(name,surname,phone);
 
     }
 
     private void StudentLIST() {
-        StudentController.studentList();
+//        studentController.studentList();
     }
 
     private void DeleteBook() {

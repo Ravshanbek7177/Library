@@ -1,8 +1,14 @@
 package org.example.Controller;
 
+import org.example.Enum.Role;
+import org.example.Enum.Status;
 import org.example.dto.Student;
+import org.example.dto.StudentBook;
+import org.example.repository.Studentrepository;
 import org.example.service.AddBookService;
 import org.example.service.StuddentBookservice;
+import org.example.service.StudentService;
+import org.example.util.ScannerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -12,63 +18,45 @@ import java.util.Scanner;
 public class MainController {
 
     @Autowired
-    private AddBookService addBookService;
+    private Studentrepository studentrepository ;
     @Autowired
-            private StuddentBookservice studdentBookservice;
-    Scanner scanner = new Scanner(System.in);
+    private StudentController studentController;
+    @Autowired
+    private AdminController adminController;
 
-    public void start() {
+    public void start(Student student) {
            boolean b = true;
-           Student student = new Student();
 
            while (b){
-               menyu();
+               System.out.println("""
+                       ** -> menu <- **
+                       1. Login;
+                       0. Exit;
+                       """);
                Scanner scanner = new Scanner(System.in);
                int n = scanner.nextInt();
                switch (n){
-                   case 1 ->BookList();
-                   case 2 -> TakeBook();
-                   case  3 -> Takebook1();
-                   case 4 -> ReturnBook();
-                   case  5 -> History();
-                   case 6 -> OrderBook();
+                   case 1 ->Login();
+                   case 0 -> {
+                       System.out.println("Exited!");
+                       b = false;
+                   }
                }
 
            }
     }
 
-    private void OrderBook() {
+    private void Login() {
+        System.out.print(" Enter phone: ");
+        Student student = studentrepository.getProfileByPhone(ScannerUtil.scannerStr.nextLine());
+        if (student == null) {
+            System.out.println("Not found people");
+            return;
+        }
+        if (student.getRole().equals(Role.ADMIN)) adminController.start(student);
+        else if (student.getRole().equals(Role.STUDENT)) studentController.start(student);
 
     }
 
-    private void History() {
-
-    }
-
-    private void ReturnBook() {
-       addBookService.bookList1();
-    }
-
-    private void Takebook1() {
-       studdentBookservice.TakeBook1();
-    }
-
-    private void TakeBook() {
-        System.out.println("Enter ID ");
-        int Id = scanner.nextInt();
-        studdentBookservice.TakeBook(Id);
-    }
-
-    private void BookList() {
-        addBookService.bookListUser();
-    }
-    public void menyu(){
-        System.out.println("1.BookList \n" +
-                "2.TakeBook \n" +
-                "3.Takebook1 \n" +
-                "4.ReturnBook \n" +
-                "5.HistornBook\n" +
-                "6.OrderBook");
-    }
 
 }

@@ -6,9 +6,9 @@ public class Database {
 
     public static void init(){
 
-        Student();
-      //  initAdmin("ravshan","ahmedov","222222");
-        Book();
+//        Student();
+//      //  initAdmin("ravshan","ahmedov","222222");
+//        Book();
         StudentBook();
     }
 
@@ -65,12 +65,12 @@ public class Database {
 
 
     private static void StudentBook() {
-        String sql = "create table if not exists  studentbook(id serial primary key," +
+        String sql = "drop table  studentbook ;create table if not exists  student_book(id serial primary key," +
                 "student_id integer REFERENCES profile(id) ," +
                 "book_id integer REFERENCES book(id)," +
-                "publishYear timestamp default now() ," +
-                "amount varchar ," +
-                "visible boolean)";
+                "created_date timestamp default now() ," +
+                "status default 'TAKEN'" +
+                "returned_date timestamp )" ;
         try {
             Connection connection = getConnection();
             Statement statement = connection.createStatement();

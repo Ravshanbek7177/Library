@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.Enum.Role;
 
 import java.time.LocalDateTime;
 @Getter
@@ -15,6 +16,7 @@ public class Student {
     private String  name ;
     private String surname ;
     private String phone;
+    private Role role;
     private LocalDateTime createdDate;
     private Boolean visible;
 
